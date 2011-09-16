@@ -19,6 +19,9 @@
 
 # pragma mark - Getting the user's detailed information, 4sq first then Venmo
 
+/**
+ * Looks up the contact information of an individual 4sq user.
+ */
 - (void)getUserDetailData:(id)user foursquareId:(NSString *)theFoursquareId {
     self.delegate = user;
     self.foursquareId = theFoursquareId;
@@ -43,6 +46,9 @@
     }
 }
 
+/**
+ * Looks up the venmo username of an individual 4sq user, based off that user's public contact info.
+ */
 - (void)getVenmoData {
     NSString *urlString = [NSString stringWithFormat:
                            @"https://venmo.com/api/v2/user_find?client_id=%@&client_secret=%@&foursquare_ids=%@", 
@@ -64,8 +70,6 @@
 # pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    //there can be multiple responses per connection...
-    //discard previously received data if another response comes afterwards
     [detailData setLength:0];
 }
 
@@ -80,6 +84,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *dataContent = [[NSString alloc] initWithData:detailData encoding:NSASCIIStringEncoding];
     
+    // once the 4sq contact info and venmo username have been looked up, return to delegate
     if(!gotFoursquareData) {
         [self getVenmoData];
         userFoursquareJson = dataContent;

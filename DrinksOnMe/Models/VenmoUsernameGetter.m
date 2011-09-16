@@ -6,6 +6,9 @@
 @synthesize delegate;
 @synthesize venmoData;
 
+/**
+ * Looks up a venmo username based on facebook id, phone, email, or twitter.
+ */
 - (void)getVenmoUsernameData:(id)tableViewController 
                   facebookId:(NSString *)facebookId 
                        email:(NSString *)email 
@@ -39,8 +42,6 @@
 # pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    //there can be multiple responses per connection...
-    //discard previously received data if another response comes afterwards
     [venmoData setLength:0];
 }
 

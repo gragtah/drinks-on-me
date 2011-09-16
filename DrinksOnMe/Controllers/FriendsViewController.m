@@ -12,9 +12,6 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
-        self.title = @"Friends";
-    }
     return self;
 }
 
@@ -98,15 +95,21 @@
     User *friend = [friendUsers objectAtIndex:[indexPath row]];
     
     NSLog(@"FRIEND: %@", friend.foursquareID);
-    NSLog(@"venmo name from 4sq id: %@", friend.venmoName);
+    NSLog(@"Venmo name from 4sq id: %@", friend.venmoName);
     
+    // set the features on the transaction object
     venmoTransaction = [[VenmoTransaction alloc] init];
     venmoTransaction.amount = 5.0f;
     venmoTransaction.note = @"for a drink on me!";
     venmoTransaction.toUserHandle = friend.venmoName;
 
+    // this will show a venmo WEB VIEW payment scheme:
 //    [HelperFunctions openWebAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
+    
+    // this will show a venmo APP VIEW payment scheme (if Venmo is installed and at current version):
     [HelperFunctions openVenmoAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
+    
+    // deselect the row
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -124,6 +127,8 @@
                                  valueForKey:@"friends"] 
                                 valueForKey:@"items"];
     
+    //Initial call to 4sq api gets a JSON list of all the user's friends. Parse the JSON
+    // and add them to the datasource array of the table view
     NSEnumerator *e = [friendUsersJSON objectEnumerator];
     id userObj;
     while (userObj = [e nextObject]) {
@@ -133,14 +138,20 @@
         foursquareFriend.firstName = [userObj valueForKey:@"firstName"];
         foursquareFriend.lastName = [userObj valueForKey:@"lastName"];
         foursquareFriend.photoURL = [userObj valueForKey:@"photo"];
+        
+        // look up the 4sq friend's public information: like email, phone, twitter, fbook
         [foursquareFriend getUserDetailData:self];
+        
+        // add the 4sq friend to the datasource
         [friendUsers addObject:foursquareFriend];
     }
-//    [self.tableView reloadData];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UserDetailDelegate
 
+// when the 4sq friends' data is received from the server, reload the table view with new data
 - (void)didFinishUserDetailLoading {
     [self.tableView reloadData];
 }

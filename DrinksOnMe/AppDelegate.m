@@ -15,12 +15,13 @@
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // Create the Venmo Client object
+    // Create the Venmo Client object (used for sending a payment through venmo)
     self.venmoClient = [VenmoClient clientWithAppId:venmoAppId 
                                              secret:venmoAppSecret
                                             localId:venmoLocalAppId];
     venmoClient.delegate = self;
     
+    // Create the view controller that enables logging in to foursquare
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     
     self.navigationController = [[NavigationController alloc] 
@@ -42,6 +43,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return NO;
 }
 
+/**
+ * Called when a payment finishes and the data is being sent back to DrinksOnMe.
+ * - as an example, the data is displayed in a popup alert.
+ */
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSLog(@"openURL: %@", url);
@@ -67,6 +72,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }];
 }
 
+/**
+ * Called when the device is running less than iOS 5
+ */
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
 #pragma mark - VenmoClientDelegate
 

@@ -14,5 +14,3 @@
 @property (strong, nonatomic) UIBarButtonItem *logoutButton;
 
 @end
-
-//https://venmo.com/api/v2/user_find?client_id=1001&client_secret=CacCV7623Kd9tdH5PyGZXbnGZxkVTzdR&foursquare_ids=690,8687306" -b "VV=64;"

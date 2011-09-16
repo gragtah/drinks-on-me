@@ -33,6 +33,9 @@
     [self setupLoadView];
 }
 
+/**
+ * Go to the 4sq authentication site so the user can enter credentials.
+ */
 - (void) setupViewDidLoad {
     
     // Load the web view.
@@ -63,13 +66,15 @@
 
     //catch the access_token before webView has a chance to error out, then close webview 
     if([requestString rangeOfString:@"access_token="].location != NSNotFound) {
+        
+        //store the access token in NSUserDefaults
         NSString *accessToken = [[requestString componentsSeparatedByString:@"="] lastObject];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:accessToken forKey:@"access_token"];
         [defaults synchronize];
         
         NSLog(@"*** returning to DrinksOnMe with token: %@", accessToken);
-        [delegate didLogin]; //this also closes the webView
+        [delegate didLogin]; //this also closes the webView (from navigationController)
         return NO;
     }
     return YES;

@@ -8,6 +8,9 @@
 
 # pragma mark - Getting the user's 4sq data
 
+/**
+ * Gets the list of friends based on the 4sq user that is logged in.
+ */
 - (void)getFriendData:(id)tableViewController {
     self.delegate = tableViewController;
     friendData = [[NSMutableData alloc] init];
@@ -34,8 +37,6 @@
 # pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    //there can be multiple responses per connection...
-    //discard previously received data if another response comes afterwards
     [friendData setLength:0];
 }
 
@@ -48,10 +49,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    //once this method is invoked, "friendData" contains the completed result
     NSString *dataContent = [[NSString alloc] initWithData:friendData encoding:NSASCIIStringEncoding];
-    //NSLog(@"data request COMPLETE: %@", dataContent);
-
     [delegate didFinishFriendLoading:dataContent];
 }
 

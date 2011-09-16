@@ -40,10 +40,6 @@
         [self addSubview:locationLabel];
         
         [self setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
-
-//        actionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//        actionButton.frame = CGRectMake(268.0f, 11.0f, 45.0f, 37.0f);
-//        self.accessoryView = actionButton;
     }    
     
     return self;
@@ -52,8 +48,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

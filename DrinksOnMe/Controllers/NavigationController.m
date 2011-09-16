@@ -23,9 +23,6 @@
     // Create a segmented control
     friendsVenue = [[UISegmentedControl alloc] initWithItems:
                                         [NSArray arrayWithObjects:@"Friends", @"@Venue", nil]];
-//    [friendsVenue setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:13.0f]
-//                                                                     forKey:UITextAttributeFont] 
-//                                forState:UIControlStateNormal];
     friendsVenue.frame = CGRectMake(0.0f, 0.0f, 160.0f, 27.0f);
     friendsVenue.segmentedControlStyle = UISegmentedControlStyleBar;
     [friendsVenue setWidth:0.0f forSegmentAtIndex:1];
@@ -42,8 +39,12 @@
                                                    action:@selector(logout)];
 }
 
+/**
+ * Handler when the segmented control changes selection.
+ */
 - (void) viewChanged:(UISegmentedControl *)sender {
     if([sender selectedSegmentIndex] == 0) {
+        //if it's the first time being shown, lazily load the table view controller
         if(!friendsViewController) {
             NSLog(@"loading friends view controller");
             FriendsViewController *friendsVC = [[FriendsViewController alloc] init];
@@ -52,29 +53,40 @@
             friendsVC.navigationItem.leftBarButtonItem = logoutButton;
             friendsVC.venmoClient = self.venmoClient;
             
+            //the other view controller is allocated here so it's mainUser can be passed in
             self.mainUser = [[User alloc] init];
             VenueViewController *venueVC = [[VenueViewController alloc] init];
             venueVC.mainUser = mainUser;
             self.venueViewController = venueVC;
             [mainUser getUserData:self];
         }
+        //display it
         self.viewControllers = [NSArray arrayWithObject:friendsViewController];
-    } else {
+    } 
+    else {
+        // load the rest of the venue table view controller
         if(venueViewController) {
             NSLog(@"loading venue view controller");
             venueViewController.navigationItem.titleView = friendsVenue;
             venueViewController.navigationItem.leftBarButtonItem = logoutButton;
             venueViewController.venmoClient = self.venmoClient;
         }
+        // and then show it
         self.viewControllers = [NSArray arrayWithObject:venueViewController];
     }
 }
 
+/**
+ * After the user successfully logs in to 4sq, show the table view
+ */
 - (void)didLogin {
     [friendsVenue setSelectedSegmentIndex:0];
     [self viewChanged:friendsVenue];
 }
 
+/**
+ * If user logs out, nil out the two table view controllers and reshow the login view.
+ */
 - (void)logout {
     NSLog(@"logout clicked");
     
@@ -100,6 +112,9 @@
 
 #pragma mark - UserDelegate
 
+/**
+ * Search for the main user's 4sq information to set the title of the segmented control
+ */
 - (void)didFinishUserLoading:(NSString *)jsonData {
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSError *error = nil;
@@ -112,6 +127,7 @@
     mainUser.venueID = [venue valueForKey:@"id"];
     mainUser.venueName = [venue valueForKey:@"name"];
     
+    // set the title
     NSString *titleText = ([mainUser.venueName length]>8 ? 
                            [NSString stringWithFormat:@"%@...", [mainUser.venueName substringToIndex:8]] 
                            : mainUser.venueName);

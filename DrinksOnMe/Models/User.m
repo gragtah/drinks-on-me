@@ -33,6 +33,9 @@
 
 # pragma mark - User
 
+/**
+ * Gets the main user's data.
+ */
 - (void)getUserData:(id)tableViewController {
     self.navigationControllerDelegate = tableViewController;
     userData = [[NSMutableData alloc] init];
@@ -56,6 +59,9 @@
     }
 }
 
+/**
+ * Gets the non-main user's detailed information; like the email, phone, twitter, and facebook.
+ */
 - (void)getUserDetailData:(id)theUserDetailDelegate {
     self.userDetailDelegate = theUserDetailDelegate;
     self.userDetailGetter = [[UserDetailDataGetter alloc] init];
@@ -65,8 +71,6 @@
 # pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    //there can be multiple responses per connection...
-    //discard previously received data if another response comes afterwards
     [userData setLength:0];
 }
 
@@ -85,6 +89,11 @@
 
 #pragma mark - UserDetailDataGetterDelegate
 
+/**
+ * Gets the detailed information about the user from the 4sq api
+ *  If venmo username can be retrieved from 4sq username, use it. Otherwise search for it
+ *  based on the 4sq contact information.
+ */
 - (void)didFinishUserDetailLoading:(NSString *)userFoursquareJson 
                      userVenmoJson:(NSString *)userVenmoJson {
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
@@ -92,8 +101,10 @@
     NSArray *foursquareJson = [jsonParser objectWithString:userFoursquareJson error:&error];
     NSArray *venmoJson  = [jsonParser objectWithString:userVenmoJson error:&error];
     
-    NSObject *fsqContact = [[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] valueForKey:@"contact"];
-    NSObject *fsqCheckin = [[[[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] valueForKey:@"checkins"] valueForKey:@"items"] objectAtIndex:0];
+    NSObject *fsqContact = [[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] 
+                            valueForKey:@"contact"];
+    NSObject *fsqCheckin = [[[[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] 
+                              valueForKey:@"checkins"] valueForKey:@"items"] objectAtIndex:0];
     
     foursquareEmail = [fsqContact valueForKey:@"email"];
     phone = [fsqContact valueForKey:@"phone"];
@@ -108,12 +119,15 @@
     if(venmoContact.count > 0) {
         venmoName = [[venmoContact valueForKey:@"username"] objectAtIndex:0];
     }
-    NSLog(@"XXXXXXXXXX %@, %@, %@, %@, %@", firstName, facebookID, foursquareEmail, phone, twitter);
+//    NSLog(@"Foursquare user's credentials: %@, %@, %@, %@, %@", 
+//          firstName, facebookID, foursquareEmail, phone, twitter);
     
-    // if a venmo username was retrieved, return to view controller. else search for it on venmo servers
+    // if a venmo username was retrieved, return to view controller. 
     if (venmoName) {
         [userDetailDelegate didFinishUserDetailLoading];
-    } else if (facebookID || foursquareEmail || phone || twitter) {
+    } 
+    else if (facebookID || foursquareEmail || phone || twitter) {
+        //else search for it on venmo servers
         venmoUsernameGetter = [[VenmoUsernameGetter alloc] init];
         [venmoUsernameGetter getVenmoUsernameData:self
                                        facebookId:self.facebookID
@@ -125,12 +139,17 @@
 
 #pragma mark - VenmoUSernameGetterDelegate
 
+/**
+ * Called after the venmo username was looked up based on the facebook id, email, twitter, or phone.
+ *  Those items of contact information were retrieved from the 4sq api.
+ */
 - (void)didFinishVenmoUsernameLoading:(NSString *)jsonData {    
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSError *error = nil;
     NSArray *venmoJson = [jsonParser objectWithString:jsonData error:&error];
     NSArray *venmoContact = [venmoJson valueForKey:@"data"];
 
+    // if a venmo username was able to be retrieved, use it!
     if(venmoContact.count > 0) {
         venmoName = [[venmoContact objectAtIndex:0] valueForKey:@"username"];
     }
