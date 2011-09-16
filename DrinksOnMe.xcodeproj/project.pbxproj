@@ -75,6 +75,7 @@
 		9C0D680A142194C00027BC0F /* HelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperFunctions.m; sourceTree = "<group>"; };
 		9C0D680C1421A8880027BC0F /* VenueCheckinsDataGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueCheckinsDataGetter.h; sourceTree = "<group>"; };
 		9C0D680D1421A8880027BC0F /* VenueCheckinsDataGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueCheckinsDataGetter.m; sourceTree = "<group>"; };
+		9C4179681422D6A200D117CE /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		9C5AE2B0141C06F900FD2BE0 /* FriendsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsView.xib; sourceTree = "<group>"; };
 		9C89559814193B1400F146A5 /* DrinksOnMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinksOnMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C89559C14193B1400F146A5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -206,6 +207,7 @@
 				9C8955A214193B1500F146A5 /* DrinksOnMe-Info.plist */,
 				9C8955A614193B1500F146A5 /* main.m */,
 				9C8955A814193B1500F146A5 /* DrinksOnMe-Prefix.pch */,
+				9C4179681422D6A200D117CE /* AppConstants.h */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";

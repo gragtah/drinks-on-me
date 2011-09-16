@@ -1,10 +1,6 @@
 #import "LoginViewController.h"
 #import "FriendsViewController.h"
-
-#define CLIENT_ID_4SQ       @""
-#define CLIENT_SECRET_4SQ   @""
-#define CALLBACK_URL_4SQ    @"drinksonme://authenticate"
-//#define CALLBACK_URL    @"http://www.google.com"
+#import "AppConstants.h"
 
 @implementation LoginViewController
 
@@ -38,16 +34,11 @@
 }
 
 - (void) setupViewDidLoad {
-    // Add the top button.
-//    UIBarButtonItem *navBarButton = [[UIBarButtonItem alloc] 
-//                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-//                                     target:self action:@selector(buttonClicked)];
-//    self.navigationItem.rightBarButtonItem = navBarButton;
     
     // Load the web view.
     NSString *authURLString = [NSString stringWithFormat:
                                @"https://foursquare.com/oauth2/authenticate?client_id=%@&response_type=token&redirect_uri=%@&display=touch", 
-                               CLIENT_ID_4SQ, CALLBACK_URL_4SQ];
+                               foursquareClientId, foursquareCallbackURL];
     NSURL *authURL = [NSURL URLWithString:authURLString];
     NSLog(@"\nauthURLString: %@", authURL);
     NSURLRequest *request = [NSURLRequest requestWithURL:authURL];

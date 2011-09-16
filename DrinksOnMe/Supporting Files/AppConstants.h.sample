@@ -1,0 +1,7 @@
+static NSString *const venmoAppId             = @"";
+static NSString *const venmoLocalAppId        = @"";
+static NSString *const venmoAppSecret         = @"";
+
+static NSString *const foursquareClientId     = @"";
+static NSString *const foursquareClientSecret = @"";
+static NSString *const foursquareCallbackURL  = @"";

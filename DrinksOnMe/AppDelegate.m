@@ -1,10 +1,7 @@
 #import "AppDelegate.h"
 #import "NavigationController.h"
 #import "LoginViewController.h"
-
-static NSString *const venmoAppId      = @"";
-static NSString *const venmoLocalAppId = @"";
-static NSString *const venmoAppSecret  = @"";
+#import "Supporting Files/AppConstants.h"
 
 @implementation AppDelegate
 
@@ -20,8 +17,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Create the Venmo Client object
     self.venmoClient = [VenmoClient clientWithAppId:venmoAppId 
-                                        secret:venmoAppSecret
-                                       localId:venmoLocalAppId];
+                                             secret:venmoAppSecret
+                                            localId:venmoLocalAppId];
     venmoClient.delegate = self;
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
