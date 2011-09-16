@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9C0D680B142194C00027BC0F /* HelperFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D680A142194C00027BC0F /* HelperFunctions.m */; };
 		9C0D680E1421A8880027BC0F /* VenueCheckinsDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D680D1421A8880027BC0F /* VenueCheckinsDataGetter.m */; };
+		9C15EA261423A635000CED8F /* VenmoUsernameGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C15EA251423A635000CED8F /* VenmoUsernameGetter.m */; };
 		9C4179781422E88400D117CE /* UserDetailDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4179771422E88400D117CE /* UserDetailDataGetter.m */; };
 		9C41797B1422F9C800D117CE /* libVenmo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC702ED142280AB00E7D0B8 /* libVenmo.a */; };
 		9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C5AE2B0141C06F900FD2BE0 /* FriendsView.xib */; };
@@ -84,6 +85,8 @@
 		9C0D680A142194C00027BC0F /* HelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperFunctions.m; sourceTree = "<group>"; };
 		9C0D680C1421A8880027BC0F /* VenueCheckinsDataGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueCheckinsDataGetter.h; sourceTree = "<group>"; };
 		9C0D680D1421A8880027BC0F /* VenueCheckinsDataGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueCheckinsDataGetter.m; sourceTree = "<group>"; };
+		9C15EA241423A635000CED8F /* VenmoUsernameGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenmoUsernameGetter.h; sourceTree = "<group>"; };
+		9C15EA251423A635000CED8F /* VenmoUsernameGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenmoUsernameGetter.m; sourceTree = "<group>"; };
 		9C4179681422D6A200D117CE /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		9C4179761422E88400D117CE /* UserDetailDataGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailDataGetter.h; sourceTree = "<group>"; };
 		9C4179771422E88400D117CE /* UserDetailDataGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailDataGetter.m; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 				9CA98F63141FFEEE00E5E7F3 /* User.m */,
 				9C4179761422E88400D117CE /* UserDetailDataGetter.h */,
 				9C4179771422E88400D117CE /* UserDetailDataGetter.m */,
+				9C15EA241423A635000CED8F /* VenmoUsernameGetter.h */,
+				9C15EA251423A635000CED8F /* VenmoUsernameGetter.m */,
 				9CA98F9614200CAC00E5E7F3 /* FriendDataGetter.h */,
 				9CA98F9714200CAC00E5E7F3 /* FriendDataGetter.m */,
 				9C0D680C1421A8880027BC0F /* VenueCheckinsDataGetter.h */,
@@ -492,6 +497,7 @@
 				9C0D680B142194C00027BC0F /* HelperFunctions.m in Sources */,
 				9C0D680E1421A8880027BC0F /* VenueCheckinsDataGetter.m in Sources */,
 				9C4179781422E88400D117CE /* UserDetailDataGetter.m in Sources */,
+				9C15EA261423A635000CED8F /* VenmoUsernameGetter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

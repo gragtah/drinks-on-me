@@ -11,6 +11,7 @@
 @property (strong, nonatomic) NSString *foursquareId;
 @property (strong, nonatomic) NSString *userFoursquareJson;
 
+// Gets a foursquare user's more detailed data, like his current location, email address, shout (aka status), etc
 - (void)getUserDetailData:(id)user foursquareId:(NSString *)foursquareId;
 
 @end

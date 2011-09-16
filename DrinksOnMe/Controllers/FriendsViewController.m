@@ -61,21 +61,28 @@
         cell = [[FriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    // Get the user object associated with the cell
     User *userAtPath = [friendUsers objectAtIndex:[indexPath row]];
     
     // Time to customize dat cell!
-    cell.friendImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:
-                                                     [NSURL URLWithString:userAtPath.photoURL]]];
-    cell.usernameLabel.text = [NSString stringWithFormat:@"%@ %@", 
-                                 userAtPath.firstName, 
-                                 userAtPath.lastName != NULL ? userAtPath.lastName : @""];
+    NSString *theUsername = [NSString stringWithFormat:@"%@ %@", 
+                             userAtPath.firstName, 
+                             userAtPath.lastName != NULL ? userAtPath.lastName : @""];
+    if(userAtPath.venmoName) {
+        theUsername = [NSString stringWithFormat:@"%@ [on Venmo]", theUsername];
+    }
     
     NSString *theLocation = (userAtPath.venueName!=nil ? 
                      [NSString stringWithFormat:@"@ %@", userAtPath.venueName] : @"");
     NSString *theStatus = (userAtPath.status!=nil ? 
                      [NSString stringWithFormat:@"%@", userAtPath.status] : @""); 
-    [cell.locationLabel setText:theLocation];
-    [cell.statusLabel setText:theStatus];
+    
+    // Set the contents of the cell
+    cell.friendImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:
+                                                     [NSURL URLWithString:userAtPath.photoURL]]];
+    cell.usernameLabel.text = theUsername;
+    cell.locationLabel.text = theLocation;
+    cell.statusLabel.text = theStatus;
     
     return cell;
 }
@@ -94,7 +101,7 @@
     NSLog(@"venmo name from 4sq id: %@", friend.venmoName);
     
     venmoTransaction = [[VenmoTransaction alloc] init];
-    venmoTransaction.amount = 0.01f;
+    venmoTransaction.amount = 5.0f;
     venmoTransaction.note = @"for a drink on me!";
     venmoTransaction.toUserHandle = friend.venmoName;
 

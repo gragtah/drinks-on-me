@@ -1,15 +1,17 @@
 #import <Foundation/Foundation.h>
 #import "UserDetailDataGetter.h"
 #import "HelperFunctions.h"
+#import "VenmoUsernameGetter.h"
 
 @protocol UserDelegate;
 @protocol UserDetailDelegate;
 
-@interface User : NSURLConnection <NSURLConnectionDelegate, UserDetailDataGetterDelegate>
+@interface User : NSURLConnection <NSURLConnectionDelegate, UserDetailDataGetterDelegate, VenmoUsernameGetterDelegate>
 
 @property (assign, nonatomic) id <UserDelegate> navigationControllerDelegate;
 @property (assign, nonatomic) id <UserDetailDelegate> userDetailDelegate;
 @property (strong, nonatomic) UserDetailDataGetter *userDetailGetter;
+@property (strong, nonatomic) VenmoUsernameGetter *venmoUsernameGetter;
 
 @property (strong, nonatomic) NSMutableData *userData;
 

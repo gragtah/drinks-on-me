@@ -92,6 +92,10 @@
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     loginVC.delegate = self;
     self.viewControllers = [NSArray arrayWithObject:loginVC];
+
+    // nil out the old view controllers
+    friendsViewController = nil;
+    venueViewController = nil;
 }
 
 #pragma mark - UserDelegate
