@@ -294,8 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				9CC702ED142280AB00E7D0B8 /* libVenmo.a */,
-				9CC702EF142280AB00E7D0B8 /* VenmoSpecs.octest */,
 				9CC702F1142280AB00E7D0B8 /* VenmoApp.app */,
+				9CC702EF142280AB00E7D0B8 /* VenmoSpecs.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
