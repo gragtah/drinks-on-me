@@ -1,15 +1,21 @@
 #import "User.h"
+#import "SBJson.h"
 
 @implementation User
 
-@synthesize delegate;
+@synthesize navigationControllerDelegate;
+@synthesize userDetailDelegate;
+@synthesize userDetailGetter;
 @synthesize userData;
 
-@synthesize venmoID;
+@synthesize venmoName;
 @synthesize foursquareID;
 @synthesize firstName;
 @synthesize lastName;
 @synthesize foursquareEmail;
+@synthesize phone;
+@synthesize twitter;
+@synthesize facebookID;
 @synthesize status;
 @synthesize venueName;
 @synthesize venueID;
@@ -21,7 +27,6 @@
     self = [super init];
     firstName = @"";
     lastName = @"";
-    status = @"";
     venueName = @"";
     return self;
 }
@@ -29,7 +34,7 @@
 # pragma mark - User
 
 - (void)getUserData:(id)tableViewController {
-    self.delegate = tableViewController;
+    self.navigationControllerDelegate = tableViewController;
     userData = [[NSMutableData alloc] init];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -51,6 +56,12 @@
     }
 }
 
+- (void)getUserDetailData:(id)theUserDetailDelegate {
+    self.userDetailDelegate = theUserDetailDelegate;
+    self.userDetailGetter = [[UserDetailDataGetter alloc] init];
+    [userDetailGetter getUserDetailData:self foursquareId:foursquareID];
+}
+
 # pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -69,9 +80,65 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *dataContent = [[NSString alloc] initWithData:userData encoding:NSASCIIStringEncoding];
-    [delegate didFinishUserLoading:dataContent];
+    [navigationControllerDelegate didFinishUserLoading:dataContent];
 }
 
+#pragma mark - UserDetailDataGetterDelegate
+
+- (void)didFinishUserDetailLoading:(NSString *)userFoursquareJson 
+                     userVenmoJson:(NSString *)userVenmoJson {
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    NSError *error = nil;
+    NSArray *foursquareJson = [jsonParser objectWithString:userFoursquareJson error:&error];
+    NSArray *venmoJson  = [jsonParser objectWithString:userVenmoJson error:&error];
+    
+    NSObject *fsqContact = [[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] valueForKey:@"contact"];
+    NSObject *fsqCheckin = [[[[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] valueForKey:@"checkins"] valueForKey:@"items"] objectAtIndex:0];
+    
+    foursquareEmail = [[fsqContact valueForKey:@"contact"] valueForKey:@"email"];
+    phone = [[fsqContact valueForKey:@"contact"] valueForKey:@"phone"];
+    twitter = [[fsqContact valueForKey:@"contact"] valueForKey:@"twitter"];
+    facebookID = [[fsqContact valueForKey:@"contact"] valueForKey:@"facebook"];
+
+    status = [fsqCheckin valueForKey:@"shout"];
+    venueName = [[fsqCheckin valueForKey:@"venue"] valueForKey:@"name"];
+    venueID = [[fsqCheckin valueForKey:@"venue"] valueForKey:@"id"];
+    
+    NSArray *venmoContact = [venmoJson valueForKey:@"data"];
+    if(venmoContact.count > 0) {
+        venmoName = [[venmoContact valueForKey:@"username"] objectAtIndex:0];
+    }
+    
+    [userDetailDelegate didFinishUserDetailLoading];
+}
 
 @end
 
+/*
+ response: {
+    user: {
+        id: "3789071"
+        firstName: "Matt"
+        lastName: "Di Pasquale"
+        photo: "https://playfoursquare.s3.amazonaws.com/userpix_thumbs/V5CPVTZZ0PECUVPF.jpg"
+        gender: "male"
+        homeCity: "Westport, CT"
+        relationship: "friend"
+        type: "user"
+        pings: true
+        contact: {
+            phone: "6178940859"
+            email: "liveloveprosper@gmail.com"
+            twitter: "mattdipasquale"
+            facebook: "514417"
+            }
+        }
+    }
+ 
+ 
+ {"data": 
+    [{"username": "kortina", "foursquare_id": "690"}, 
+     {"username": "graham", "foursquare_id": "8687306"}
+ ]}
+ 
+ */

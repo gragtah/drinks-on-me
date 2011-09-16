@@ -67,4 +67,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }];
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
+#pragma mark - VenmoClientDelegate
+
+- (id)venmoClient:(VenmoClient *)client JSONObjectWithData:(NSData *)data {
+    return nil;
+}
+#endif
+
 @end

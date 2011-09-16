@@ -21,13 +21,13 @@
         [self addSubview:friendImage];
 
         usernameLabel = [[UILabel alloc] init];
-        usernameLabel.frame = CGRectMake(63.0f, 5.0f, 197.0f, 21.0f);
+        usernameLabel.frame = CGRectMake(63.0f, 5.0f, 252.0f, 21.0f);
         [usernameLabel setFont:[UIFont systemFontOfSize:15.0f]];
         usernameLabel.backgroundColor = self.backgroundColor;
         [self addSubview:usernameLabel];
         
         locationLabel = [[UILabel alloc] init];
-        locationLabel.frame = CGRectMake(63.0f, 20.0f, 197.0f, 21.0f);
+        locationLabel.frame = CGRectMake(63.0f, 21.0f, 252.0f, 21.0f);
         locationLabel.textColor = [UIColor scrollViewTexturedBackgroundColor];
 //        locationLabel.backgroundColor = self.backgroundColor;
         locationLabel.backgroundColor = [UIColor clearColor];
@@ -35,7 +35,7 @@
 //        [self addSubview:locationLabel];
         
         statusLabel = [[UILabel alloc] init];
-        statusLabel.frame = CGRectMake(63.0f, 34.0f, 197.0f, 21.0f);
+        statusLabel.frame = CGRectMake(63.0f, 36.0f, 252.0f, 21.0f);
         statusLabel.backgroundColor = self.backgroundColor;
         [statusLabel setFont:[UIFont italicSystemFontOfSize:13.0f]];
         [self addSubview:statusLabel];

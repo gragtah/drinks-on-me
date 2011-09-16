@@ -23,10 +23,13 @@
     // Create a segmented control
     friendsVenue = [[UISegmentedControl alloc] initWithItems:
                                         [NSArray arrayWithObjects:@"Friends", @"@Venue", nil]];
-    [friendsVenue setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:12.0f]
-                                                                     forKey:UITextAttributeFont] 
-                                forState:UIControlStateNormal];
-    friendsVenue.frame = CGRectMake(0.0f, 0.0f, 160.0f, 30.0f);
+//    [friendsVenue setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:13.0f]
+//                                                                     forKey:UITextAttributeFont] 
+//                                forState:UIControlStateNormal];
+    friendsVenue.frame = CGRectMake(0.0f, 0.0f, 160.0f, 27.0f);
+    friendsVenue.segmentedControlStyle = UISegmentedControlStyleBar;
+    [friendsVenue setWidth:0.0f forSegmentAtIndex:1];
+    friendsVenue.apportionsSegmentWidthsByContent = YES;
     [friendsVenue addTarget:self 
                      action:@selector(viewChanged:) 
            forControlEvents:UIControlEventValueChanged];
@@ -37,38 +40,33 @@
                                                     style:UIBarButtonItemStyleDone 
                                                    target:self 
                                                    action:@selector(logout)];
-    
-    // Create the friends view controller (lazily load the venue view when it's selected)
-//    FriendsViewController *friendsVC = [[FriendsViewController alloc] init];
-//    self.friendsViewController = friendsVC;
-//    self.viewControllers = [NSArray arrayWithObjects:friendsVC, nil];
-    
-    // Add top nav bar items
-//    friendsVC.navigationItem.titleView = friendsVenue;
-//    friendsVC.navigationItem.rightBarButtonItem = logoutButton;
 }
 
 - (void) viewChanged:(UISegmentedControl *)sender {
     if([sender selectedSegmentIndex] == 0) {
-        if(friendsViewController == nil) {
+        if(!friendsViewController) {
             NSLog(@"loading friends view controller");
             FriendsViewController *friendsVC = [[FriendsViewController alloc] init];
             self.friendsViewController = friendsVC;
             friendsVC.navigationItem.titleView = friendsVenue;
             friendsVC.navigationItem.leftBarButtonItem = logoutButton;
             friendsVC.venmoClient = self.venmoClient;
-        }
-        self.viewControllers = [NSArray arrayWithObjects:friendsViewController, nil];
-    } else {
-        if(venueViewController == nil) {
-            NSLog(@"loading venue view controller");
+            
+            self.mainUser = [[User alloc] init];
             VenueViewController *venueVC = [[VenueViewController alloc] init];
+            venueVC.mainUser = mainUser;
             self.venueViewController = venueVC;
-            venueVC.navigationItem.titleView = friendsVenue;
-            venueVC.navigationItem.leftBarButtonItem = logoutButton;
-            venueVC.venmoClient = self.venmoClient;
+            [mainUser getUserData:self];
         }
-        self.viewControllers = [NSArray arrayWithObjects:venueViewController, nil];
+        self.viewControllers = [NSArray arrayWithObject:friendsViewController];
+    } else {
+        if(venueViewController) {
+            NSLog(@"loading venue view controller");
+            venueViewController.navigationItem.titleView = friendsVenue;
+            venueViewController.navigationItem.leftBarButtonItem = logoutButton;
+            venueViewController.venmoClient = self.venmoClient;
+        }
+        self.viewControllers = [NSArray arrayWithObject:venueViewController];
     }
 }
 
@@ -109,6 +107,12 @@
     mainUser.foursquareID = [userJSON valueForKey:@"id"];
     mainUser.venueID = [venue valueForKey:@"id"];
     mainUser.venueName = [venue valueForKey:@"name"];
+    
+    NSString *titleText = ([mainUser.venueName length]>8 ? 
+                           [NSString stringWithFormat:@"%@...", [mainUser.venueName substringToIndex:8]] 
+                           : mainUser.venueName);
+    [friendsVenue setTitle:[NSString stringWithFormat:@"@%@", titleText] 
+         forSegmentAtIndex:1];
 }
 
 @end

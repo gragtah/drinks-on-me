@@ -1,11 +1,12 @@
 #import <UIKit/UIKit.h>
-#import "../Views/FriendsCell.h"
-#import "../Models/User.h"
-#import "../Models/FriendDataGetter.h"
-#import "../SBJson_Classes/SBJson.h"
 #import <Venmo/Venmo.h>
 
-@interface FriendsViewController : UITableViewController <FriendDataGetterDelegate, VenmoClientDelegate>
+#import "FriendsCell.h"
+#import "User.h"
+#import "FriendDataGetter.h"
+
+
+@interface FriendsViewController : UITableViewController <FriendDataGetterDelegate, UserDetailDelegate>
 
 @property (strong, nonatomic) VenmoClient *venmoClient;
 @property (strong, nonatomic) VenmoTransaction *venmoTransaction;

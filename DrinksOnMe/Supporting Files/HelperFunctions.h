@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "Venmo/Venmo.h"
+#import <Venmo/Venmo.h>
 
 @interface HelperFunctions : NSObject
 

@@ -1,27 +1,26 @@
 #import <Foundation/Foundation.h>
-#import "../Supporting Files/HelperFunctions.h"
+#import "UserDetailDataGetter.h"
+#import "HelperFunctions.h"
 
 @protocol UserDelegate;
+@protocol UserDetailDelegate;
 
-@interface User : NSURLConnection <NSURLConnectionDelegate> {
-    NSString *venmoID;
-    NSString *foursquareID;
-    NSString *firstName;
-    NSString *lastName;
-    NSString *foursquareEmail;
-    NSString *photoURL;
-    
-    NSArray *friends;
-}
+@interface User : NSURLConnection <NSURLConnectionDelegate, UserDetailDataGetterDelegate>
 
-@property (assign, nonatomic) id <UserDelegate> delegate;
+@property (assign, nonatomic) id <UserDelegate> navigationControllerDelegate;
+@property (assign, nonatomic) id <UserDetailDelegate> userDetailDelegate;
+@property (strong, nonatomic) UserDetailDataGetter *userDetailGetter;
+
 @property (strong, nonatomic) NSMutableData *userData;
 
-@property (strong, nonatomic) NSString *venmoID;
+@property (strong, nonatomic) NSString *venmoName;
 @property (strong, nonatomic) NSString *foursquareID;
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *foursquareEmail;
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *twitter;
+@property (strong, nonatomic) NSString *facebookID;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *venueName;
 @property (strong, nonatomic) NSString *venueID;
@@ -30,6 +29,7 @@
 @property (strong, nonatomic) NSArray *friends;
 
 - (void)getUserData:(id)tableViewController;
+- (void)getUserDetailData:(id)theUserDetailDelegate;
 
 @end
 
@@ -37,5 +37,12 @@
 
 @required
 - (void)didFinishUserLoading:(NSString *)jsonData;
+
+@end
+
+@protocol UserDetailDelegate <NSObject>
+
+@required
+- (void)didFinishUserDetailLoading;
 
 @end

@@ -1,5 +1,6 @@
 #import "FriendsViewController.h"
 #import "../Views/FriendsCell.h"
+#import "SBJson.h"
 
 @implementation FriendsViewController
 
@@ -68,12 +69,13 @@
     cell.usernameLabel.text = [NSString stringWithFormat:@"%@ %@", 
                                  userAtPath.firstName, 
                                  userAtPath.lastName != NULL ? userAtPath.lastName : @""];
-    [cell.locationLabel setText:@"@ Charlies 10:08 pm"];
-    [cell.statusLabel setText:@"The apple martini looks delicious!"];
-//    [cell.locationLabel setText:@""];
-//    [cell.statusLabel setText:@""];
-//    [cell.actionButton setTitle:@"Bam" forState:UIControlStateNormal];
-//    [cell.actionButton addTarget:self action:@selector(showVenmoPayment) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString *theLocation = (userAtPath.venueName!=nil ? 
+                     [NSString stringWithFormat:@"@ %@", userAtPath.venueName] : @"");
+    NSString *theStatus = (userAtPath.status!=nil ? 
+                     [NSString stringWithFormat:@"@ %@", userAtPath.status] : @""); 
+    [cell.locationLabel setText:theLocation];
+    [cell.statusLabel setText:theStatus];
     
     return cell;
 }
@@ -82,23 +84,23 @@
     return 60.0f;
 }
 
-- (void)showVenmoPayment {
-    
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     User *friend = [friendUsers objectAtIndex:[indexPath row]];
     
+    NSLog(@"FRIEND: %@", friend.foursquareID);
+    NSLog(@"venmo name from 4sq id: %@", friend.venmoName);
+    
     venmoTransaction = [[VenmoTransaction alloc] init];
     venmoTransaction.amount = 0.01f;
     venmoTransaction.note = @"for a drink on me!";
-    venmoTransaction.toUserId = friend.foursquareID;
+    venmoTransaction.toUserHandle = friend.venmoName;
 
 //    [HelperFunctions openWebAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
     [HelperFunctions openVenmoAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - FriendDataGetterDelegate
@@ -119,31 +121,21 @@
     id userObj;
     while (userObj = [e nextObject]) {
         User *foursquareFriend = [[User alloc] init];
+        foursquareFriend.userDetailDelegate = self;
         foursquareFriend.foursquareID = [userObj valueForKey:@"id"];
         foursquareFriend.firstName = [userObj valueForKey:@"firstName"];
         foursquareFriend.lastName = [userObj valueForKey:@"lastName"];
         foursquareFriend.photoURL = [userObj valueForKey:@"photo"];
+        [foursquareFriend getUserDetailData:self];
         [friendUsers addObject:foursquareFriend];
     }
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
-- (void)didFinishUserDetailLoading:(NSString *)jsonData {
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:jsonData error:&error];
-    
-    NSString *receivedFoursquareId = [[[jsonObjects 
-                                        valueForKey:@"response"] 
-                                       valueForKey:@"user"] 
-                                      valueForKey:@"id"];
-    
-//    User *matchedUser;
-//    for(User foursquareFriend in friendUsers) {
-//        if () {
-//            <#statements#>
-//        }
-//    }
+#pragma mark - UserDetailDelegate
+
+- (void)didFinishUserDetailLoading {
+    [self.tableView reloadData];
 }
 
 @end

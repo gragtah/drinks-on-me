@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9C0D680B142194C00027BC0F /* HelperFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D680A142194C00027BC0F /* HelperFunctions.m */; };
 		9C0D680E1421A8880027BC0F /* VenueCheckinsDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D680D1421A8880027BC0F /* VenueCheckinsDataGetter.m */; };
+		9C4179781422E88400D117CE /* UserDetailDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4179771422E88400D117CE /* UserDetailDataGetter.m */; };
+		9C41797B1422F9C800D117CE /* libVenmo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC702ED142280AB00E7D0B8 /* libVenmo.a */; };
 		9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C5AE2B0141C06F900FD2BE0 /* FriendsView.xib */; };
 		9C89559D14193B1400F146A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C89559C14193B1400F146A5 /* UIKit.framework */; };
 		9C89559F14193B1400F146A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C89559E14193B1400F146A5 /* Foundation.framework */; };
@@ -40,6 +42,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9C4179791422F8B900D117CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CC702C714227F2300E7D0B8 /* Venmo.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9BD6C6913EEE06400F4D8F4;
+			remoteInfo = Venmo;
+		};
 		9C8955BC14193B1500F146A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9C89558F14193B1400F146A5 /* Project object */;
@@ -76,6 +85,8 @@
 		9C0D680C1421A8880027BC0F /* VenueCheckinsDataGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueCheckinsDataGetter.h; sourceTree = "<group>"; };
 		9C0D680D1421A8880027BC0F /* VenueCheckinsDataGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueCheckinsDataGetter.m; sourceTree = "<group>"; };
 		9C4179681422D6A200D117CE /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
+		9C4179761422E88400D117CE /* UserDetailDataGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailDataGetter.h; sourceTree = "<group>"; };
+		9C4179771422E88400D117CE /* UserDetailDataGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailDataGetter.m; sourceTree = "<group>"; };
 		9C5AE2B0141C06F900FD2BE0 /* FriendsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsView.xib; sourceTree = "<group>"; };
 		9C89559814193B1400F146A5 /* DrinksOnMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinksOnMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C89559C14193B1400F146A5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -139,6 +150,7 @@
 			files = (
 				9C89559D14193B1400F146A5 /* UIKit.framework in Frameworks */,
 				9C89559F14193B1400F146A5 /* Foundation.framework in Frameworks */,
+				9C41797B1422F9C800D117CE /* libVenmo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +263,8 @@
 			children = (
 				9CA98F62141FFEEE00E5E7F3 /* User.h */,
 				9CA98F63141FFEEE00E5E7F3 /* User.m */,
+				9C4179761422E88400D117CE /* UserDetailDataGetter.h */,
+				9C4179771422E88400D117CE /* UserDetailDataGetter.m */,
 				9CA98F9614200CAC00E5E7F3 /* FriendDataGetter.h */,
 				9CA98F9714200CAC00E5E7F3 /* FriendDataGetter.m */,
 				9C0D680C1421A8880027BC0F /* VenueCheckinsDataGetter.h */,
@@ -333,6 +347,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9C41797A1422F8B900D117CE /* PBXTargetDependency */,
 			);
 			name = DrinksOnMe;
 			productName = DrinksOnMe;
@@ -476,6 +491,7 @@
 				9CF817721421462B00D95E24 /* SBJsonWriter.m in Sources */,
 				9C0D680B142194C00027BC0F /* HelperFunctions.m in Sources */,
 				9C0D680E1421A8880027BC0F /* VenueCheckinsDataGetter.m in Sources */,
+				9C4179781422E88400D117CE /* UserDetailDataGetter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +506,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9C41797A1422F8B900D117CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Venmo;
+			targetProxy = 9C4179791422F8B900D117CE /* PBXContainerItemProxy */;
+		};
 		9C8955BD14193B1500F146A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9C89559714193B1400F146A5 /* DrinksOnMe */;

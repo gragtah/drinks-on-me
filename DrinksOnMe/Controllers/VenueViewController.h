@@ -5,7 +5,7 @@
 #import "../SBJson_Classes/SBJson.h"
 #import <Venmo/Venmo.h>
 
-@interface VenueViewController : UITableViewController <UserDelegate, VenueCheckinsDataGetterDelegate>
+@interface VenueViewController : UITableViewController <UserDelegate, VenueCheckinsDataGetterDelegate, UserDetailDelegate>
 
 @property (strong, nonatomic) VenmoClient *venmoClient;
 @property (strong, nonatomic) VenmoTransaction *venmoTransaction;

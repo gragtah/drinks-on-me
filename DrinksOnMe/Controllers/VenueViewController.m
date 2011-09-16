@@ -13,7 +13,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title = @"Venue!";
+//        self.title = @"Venue!";
     }
     return self;
 }
@@ -23,7 +23,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    mainUser = [[User alloc] init];
     [mainUser getUserData:self];
 }
 
@@ -61,24 +60,21 @@
         cell = [[FriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    NSLog(@"count: %d", checkedInUsers.count);
-    NSLog(@"index path row: %d", [indexPath row]);
-    NSLog(@"index path section: %d", [indexPath section]);
     User *userAtPath = [checkedInUsers objectAtIndex:[indexPath row]];
-
+    
+    // Time to customize dat cell!
     cell.friendImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:
                                                      [NSURL URLWithString:userAtPath.photoURL]]];
     cell.usernameLabel.text = [NSString stringWithFormat:@"%@ %@", 
                                userAtPath.firstName, 
                                userAtPath.lastName != NULL ? userAtPath.lastName : @""];
     
-    // Time to customize dat cell!
-    [cell.friendImage setBackgroundColor:[UIColor greenColor]];
-    [cell.locationLabel setText:@"@ Batcave 3:14 am"];
-    [cell.statusLabel setText:@"No tolerance for baddies."];
-//    [cell.locationLabel setText:@""];
-//    [cell.statusLabel setText:@""];
-//    [cell.actionButton setTitle:@"Bam" forState:UIControlStateNormal];
+    NSString *theLocation = (userAtPath.venueName!=nil ? 
+                             [NSString stringWithFormat:@"@ %@", userAtPath.venueName] : @"");
+    NSString *theStatus = (userAtPath.status!=nil ? 
+                           [NSString stringWithFormat:@"@ %@", userAtPath.status] : @""); 
+    [cell.locationLabel setText:theLocation];
+    [cell.statusLabel setText:theStatus];
     
     return cell;
 }
@@ -91,13 +87,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    User *friend = [checkedInUsers objectAtIndex:[indexPath row]];
+    
+    NSLog(@"FRIEND: %@", friend.foursquareID);
+    NSLog(@"venmo name from 4sq id: %@", friend.venmoName);
+    
+    venmoTransaction = [[VenmoTransaction alloc] init];
+    venmoTransaction.amount = 0.01f;
+    venmoTransaction.note = @"for a drink on me!";
+    venmoTransaction.toUserHandle = friend.venmoName;
+    
+    //    [HelperFunctions openWebAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
+    [HelperFunctions openVenmoAction:self venmoClient:venmoClient venmoTransaction:venmoTransaction];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - UserDelegate
@@ -142,9 +144,15 @@
         checkedInUser.firstName = [checkedInArray valueForKey:@"firstName"];
         checkedInUser.lastName = [checkedInArray valueForKey:@"lastName"];
         checkedInUser.photoURL = [checkedInArray valueForKey:@"photo"];
+        [checkedInUser getUserDetailData:self];
         [checkedInUsers addObject:checkedInUser];
-        NSLog(@"added a user");
     }
+    [self.tableView reloadData];
+}
+
+#pragma mark - UserDetailDelegate
+
+- (void)didFinishUserDetailLoading {
     [self.tableView reloadData];
 }
 

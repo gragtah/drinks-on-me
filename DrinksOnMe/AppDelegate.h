@@ -3,7 +3,7 @@
 
 @class NavigationController; //forward class declaration
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
+@interface AppDelegate : NSObject <UIApplicationDelegate, VenmoClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NavigationController *navigationController;
