@@ -73,7 +73,7 @@
     NSString *theLocation = (userAtPath.venueName!=nil ? 
                      [NSString stringWithFormat:@"@ %@", userAtPath.venueName] : @"");
     NSString *theStatus = (userAtPath.status!=nil ? 
-                     [NSString stringWithFormat:@"@ %@", userAtPath.status] : @""); 
+                     [NSString stringWithFormat:@"%@", userAtPath.status] : @""); 
     [cell.locationLabel setText:theLocation];
     [cell.statusLabel setText:theStatus];
     
@@ -139,23 +139,3 @@
 }
 
 @end
-
-/*
- response: {
-    user: {
-    id: "3789071"
-    firstName: "Matt"
-    lastName: "Di Pasquale"
-    photo: "https://playfoursquare.s3.amazonaws.com/userpix_thumbs/V5CPVTZZ0PECUVPF.jpg"
-    gender: "male"
-    homeCity: "Westport, CT"
-    relationship: "friend"
-    type: "user"
-    pings: true
-    contact: {
-        phone: "6178940859"
-        email: "liveloveprosper@gmail.com"
-        twitter: "mattdipasquale"
-        facebook: "514417"
-    }
- */

@@ -27,7 +27,6 @@
     self = [super init];
     firstName = @"";
     lastName = @"";
-    venueName = @"";
     return self;
 }
 

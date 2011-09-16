@@ -90,22 +90,6 @@
     
     NSString *URLString = [[self.webView.request URL] absoluteString];
     NSLog(@"<-- %@", URLString);
-    
-//    if ([URLString rangeOfString:@"access_token="].location != NSNotFound) {
-//        NSString *accessToken = [[URLString componentsSeparatedByString:@"="] lastObject];
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        [defaults setObject:accessToken forKey:@"access_token"];
-//        [defaults synchronize];
-//        
-//        NSLog(@"*** returning to Drinks On Me with token: %@", accessToken);
-//        [delegate didLogin];
-//    }
 }
-
-//- (void) buttonClicked {
-//    NSLog(@"user logged out");
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults removeObjectForKey:@"access_token"];
-//}
 
 @end

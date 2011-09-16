@@ -72,7 +72,7 @@
     NSString *theLocation = (userAtPath.venueName!=nil ? 
                              [NSString stringWithFormat:@"@ %@", userAtPath.venueName] : @"");
     NSString *theStatus = (userAtPath.status!=nil ? 
-                           [NSString stringWithFormat:@"@ %@", userAtPath.status] : @""); 
+                           [NSString stringWithFormat:@"%@", userAtPath.status] : @""); 
     [cell.locationLabel setText:theLocation];
     [cell.statusLabel setText:theStatus];
     

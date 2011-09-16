@@ -116,23 +116,3 @@
 }
 
 @end
-
-/*
-response: {
-user: {
-    id: "3789071"
-firstName: "Matt"
-lastName: "Di Pasquale"
-photo: "https://playfoursquare.s3.amazonaws.com/userpix_thumbs/V5CPVTZZ0PECUVPF.jpg"
-gender: "male"
-homeCity: "Westport, CT"
-relationship: "friend"
-type: "user"
-pings: true
-contact: {
-phone: "6178940859"
-email: "liveloveprosper@gmail.com"
-twitter: "mattdipasquale"
-facebook: "514417"
-}
- */
