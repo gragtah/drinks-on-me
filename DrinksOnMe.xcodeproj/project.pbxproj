@@ -25,6 +25,7 @@
 		9C8955F6141944AC00F146A5 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955F5141944AC00F146A5 /* FriendsViewController.m */; };
 		9C8955F9141944D100F146A5 /* VenueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955F8141944D100F146A5 /* VenueViewController.m */; };
 		9C8955FC1419474D00F146A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955FB1419474C00F146A5 /* LoginViewController.m */; };
+		9C99D208142431CD006FE8CA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9C99D207142431CD006FE8CA /* README.md */; };
 		9CA98F61141FFBFF00E5E7F3 /* FriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F60141FFBFF00E5E7F3 /* FriendsCell.m */; };
 		9CA98F64141FFEEE00E5E7F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F63141FFEEE00E5E7F3 /* User.m */; };
 		9CA98F9814200CAC00E5E7F3 /* FriendDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F9714200CAC00E5E7F3 /* FriendDataGetter.m */; };
@@ -114,6 +115,7 @@
 		9C8955F8141944D100F146A5 /* VenueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueViewController.m; sourceTree = "<group>"; };
 		9C8955FA1419474C00F146A5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9C8955FB1419474C00F146A5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		9C99D207142431CD006FE8CA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9CA98F5F141FFBFF00E5E7F3 /* FriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsCell.h; path = Views/FriendsCell.h; sourceTree = "<group>"; };
 		9CA98F60141FFBFF00E5E7F3 /* FriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsCell.m; path = Views/FriendsCell.m; sourceTree = "<group>"; };
 		9CA98F62141FFEEE00E5E7F3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		9C89558D14193B1400F146A5 = {
 			isa = PBXGroup;
 			children = (
+				9C99D207142431CD006FE8CA /* README.md */,
 				9C8955A014193B1400F146A5 /* DrinksOnMe */,
 				9CF8174D1421462B00D95E24 /* SBJson_Classes */,
 				9C8955BE14193B1500F146A5 /* DrinksOnMeTests */,
@@ -456,6 +459,7 @@
 				9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */,
 				C93E83A8142431A9001FD5CE /* Icon.png in Resources */,
 				C93E83A9142431A9001FD5CE /* Icon@2x.png in Resources */,
+				9C99D208142431CD006FE8CA /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
