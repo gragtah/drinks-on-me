@@ -40,6 +40,8 @@
 		9CF817701421462B00D95E24 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF817621421462B00D95E24 /* SBJsonTokeniser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9CF817711421462B00D95E24 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF817641421462B00D95E24 /* SBJsonUTF8Stream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9CF817721421462B00D95E24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF817661421462B00D95E24 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C93E83A8142431A9001FD5CE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C93E83A6142431A9001FD5CE /* Icon.png */; };
+		C93E83A9142431A9001FD5CE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C93E83A7142431A9001FD5CE /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +146,8 @@
 		9CF817641421462B00D95E24 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		9CF817651421462B00D95E24 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		9CF817661421462B00D95E24 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		C93E83A6142431A9001FD5CE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		C93E83A7142431A9001FD5CE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +183,7 @@
 				9CC702DC1422807300E7D0B8 /* Libraries */,
 				9C89559B14193B1400F146A5 /* Frameworks */,
 				9C89559914193B1400F146A5 /* Products */,
+				C93E83A5142431A9001FD5CE /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,6 +343,15 @@
 			path = DrinksOnMe/SBJson_Classes;
 			sourceTree = "<group>";
 		};
+		C93E83A5142431A9001FD5CE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C93E83A6142431A9001FD5CE /* Icon.png */,
+				C93E83A7142431A9001FD5CE /* Icon@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -440,6 +454,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */,
+				C93E83A8142431A9001FD5CE /* Icon.png in Resources */,
+				C93E83A9142431A9001FD5CE /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
