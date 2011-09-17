@@ -12,7 +12,6 @@
 		9C15EA261423A635000CED8F /* VenmoUsernameGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C15EA251423A635000CED8F /* VenmoUsernameGetter.m */; };
 		9C4179781422E88400D117CE /* UserDetailDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4179771422E88400D117CE /* UserDetailDataGetter.m */; };
 		9C41797B1422F9C800D117CE /* libVenmo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC702ED142280AB00E7D0B8 /* libVenmo.a */; };
-		9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C5AE2B0141C06F900FD2BE0 /* FriendsView.xib */; };
 		9C89559D14193B1400F146A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C89559C14193B1400F146A5 /* UIKit.framework */; };
 		9C89559F14193B1400F146A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C89559E14193B1400F146A5 /* Foundation.framework */; };
 		9C8955A714193B1500F146A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955A614193B1500F146A5 /* main.m */; };
@@ -25,7 +24,6 @@
 		9C8955F6141944AC00F146A5 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955F5141944AC00F146A5 /* FriendsViewController.m */; };
 		9C8955F9141944D100F146A5 /* VenueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955F8141944D100F146A5 /* VenueViewController.m */; };
 		9C8955FC1419474D00F146A5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8955FB1419474C00F146A5 /* LoginViewController.m */; };
-		9C99D208142431CD006FE8CA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9C99D207142431CD006FE8CA /* README.md */; };
 		9CA98F61141FFBFF00E5E7F3 /* FriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F60141FFBFF00E5E7F3 /* FriendsCell.m */; };
 		9CA98F64141FFEEE00E5E7F3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F63141FFEEE00E5E7F3 /* User.m */; };
 		9CA98F9814200CAC00E5E7F3 /* FriendDataGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA98F9714200CAC00E5E7F3 /* FriendDataGetter.m */; };
@@ -456,10 +454,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C5AE2B1141C06F900FD2BE0 /* FriendsView.xib in Resources */,
 				C93E83A8142431A9001FD5CE /* Icon.png in Resources */,
 				C93E83A9142431A9001FD5CE /* Icon@2x.png in Resources */,
-				9C99D208142431CD006FE8CA /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
