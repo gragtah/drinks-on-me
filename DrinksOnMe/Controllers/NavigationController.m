@@ -26,7 +26,6 @@
     friendsVenue.frame = CGRectMake(0.0f, 0.0f, 160.0f, 27.0f);
     friendsVenue.segmentedControlStyle = UISegmentedControlStyleBar;
     [friendsVenue setWidth:0.0f forSegmentAtIndex:1];
-    friendsVenue.apportionsSegmentWidthsByContent = YES;
     [friendsVenue addTarget:self 
                      action:@selector(viewChanged:) 
            forControlEvents:UIControlEventValueChanged];
