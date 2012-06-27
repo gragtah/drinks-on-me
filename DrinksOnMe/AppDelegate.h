@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "Venmo/Venmo.h"
+#import <Venmo/Venmo.h>
 
-@class NavigationController; //forward class declaration
+@class NavigationController;
 
-@interface AppDelegate : NSObject <UIApplicationDelegate, VenmoClientDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, VenmoClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NavigationController *navigationController;

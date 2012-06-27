@@ -13,8 +13,8 @@
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
     // Create the Venmo Client object (used for sending a payment through venmo)
     self.venmoClient = [VenmoClient clientWithAppId:venmoAppId 
                                              secret:venmoAppSecret
@@ -23,9 +23,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Create the view controller that enables logging in to foursquare
     LoginViewController *loginVC = [[LoginViewController alloc] init];
-    
-    self.navigationController = [[NavigationController alloc] 
-                                 initWithRootViewController:loginVC];
+
+    navigationController = [[NavigationController alloc] initWithRootViewController:loginVC];
     navigationController.venmoClient = venmoClient;
     loginVC.delegate = navigationController;
     window.rootViewController = navigationController;

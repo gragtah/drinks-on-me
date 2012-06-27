@@ -1,5 +1,5 @@
 #import "FriendsViewController.h"
-#import "../Views/FriendsCell.h"
+#import "FriendsCell.h"
 #import "SBJson.h"
 
 @implementation FriendsViewController
@@ -9,48 +9,37 @@
 @synthesize venmoClient;
 @synthesize venmoTransaction;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    return self;
-}
-
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     friendDataGetter = [[FriendDataGetter alloc] init];
     [friendDataGetter getFriendData:self];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     self.friendDataGetter = nil;
     [super viewDidUnload];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if(friendUsers.count > 0) {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if ([friendUsers count]) {
         return 1;
     }
     return 0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if(friendUsers.count > 0) {
-        return friendUsers.count; //actually return the number of rows...
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([friendUsers count]) {
+        return [friendUsers count]; //actually return the number of rows...
     }
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"FriendsCell";
     
     FriendsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -65,7 +54,7 @@
     NSString *theUsername = [NSString stringWithFormat:@"%@ %@", 
                              userAtPath.firstName, 
                              userAtPath.lastName != NULL ? userAtPath.lastName : @""];
-    if(userAtPath.venmoName) {
+    if (userAtPath.venmoName) {
         theUsername = [NSString stringWithFormat:@"%@ [on Venmo]", theUsername];
     }
     
@@ -90,8 +79,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     User *friend = [friendUsers objectAtIndex:[indexPath row]];
     
     NSLog(@"FRIEND: %@", friend.foursquareID);
@@ -117,31 +105,26 @@
 
 // Get the intial list of all the users
 - (void)didFinishFriendLoading:(NSString *)jsonData {
-    
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:jsonData error:&error];
-    
-    friendUsers = [[NSMutableArray alloc] init];
-    NSArray *friendUsersJSON = [[[jsonObjects valueForKey:@"response"] 
-                                 valueForKey:@"friends"] 
-                                valueForKey:@"items"];
-    
-    //Initial call to 4sq api gets a JSON list of all the user's friends. Parse the JSON
+
+    // Initial call to 4sq api gets a JSON list of all the user's friends. Parse the JSON
     // and add them to the datasource array of the table view
-    NSEnumerator *e = [friendUsersJSON objectEnumerator];
-    id userObj;
-    while (userObj = [e nextObject]) {
+    NSArray *friendDictionaries = [[[[SBJsonParser alloc] init] objectWithString:jsonData error:NULL]
+                                   valueForKeyPath:@"response.friends.items"];
+    friendUsers = [NSMutableArray arrayWithCapacity:[friendDictionaries count]];
+    for (NSDictionary *friendDictionary in friendDictionaries) {
         User *foursquareFriend = [[User alloc] init];
         foursquareFriend.userDetailDelegate = self;
-        foursquareFriend.foursquareID = [userObj valueForKey:@"id"];
-        foursquareFriend.firstName = [userObj valueForKey:@"firstName"];
-        foursquareFriend.lastName = [userObj valueForKey:@"lastName"];
-        foursquareFriend.photoURLString = [userObj valueForKey:@"photo"];
-        
+        foursquareFriend.foursquareID = [friendDictionary objectForKey:@"id"];
+        foursquareFriend.firstName = [friendDictionary objectForKey:@"firstName"];
+        foursquareFriend.lastName = [friendDictionary objectForKey:@"lastName"];
+        NSDictionary *photoDictionary = [friendDictionary objectForKey:@"photo"];
+        foursquareFriend.photoURLString =  [[photoDictionary objectForKey:@"prefix"]
+                                            stringByAppendingString:
+                                            [photoDictionary objectForKey:@"suffix"]];
+
         // look up the 4sq friend's public information: like email, phone, twitter, fbook
         [foursquareFriend getUserDetailData:self];
-        
+
         // add the 4sq friend to the datasource
         [friendUsers addObject:foursquareFriend];
     }

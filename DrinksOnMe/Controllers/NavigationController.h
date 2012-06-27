@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
+#import <Venmo/Venmo.h>
 #import "FriendsViewController.h"
 #import "VenueViewController.h"
 #import "LoginViewController.h"
-#import "Venmo/Venmo.h"
 
 @interface NavigationController : UINavigationController <LoginViewControllerDelegate, UserDelegate>
 

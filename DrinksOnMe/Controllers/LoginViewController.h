@@ -13,6 +13,7 @@
 @protocol LoginViewControllerDelegate <NSObject>
 
 @required
+
 - (void)didLogin; //called after the user successfully logs in to 3rd party app
 
 @end

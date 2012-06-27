@@ -5,9 +5,7 @@
 + (NSString *)dateAsString {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"YYYYMMDD"];
-    
-    NSDate *now = [[NSDate alloc] init];
-    return [format stringFromDate:now];
+    return [format stringFromDate:[NSDate date]];
 }
 
 + (void)openVenmoAction:(UIViewController *)viewController

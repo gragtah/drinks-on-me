@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
-#import "../Views/FriendsCell.h"
-#import "../Models/User.h"
-#import "../Models/VenueCheckinsDataGetter.h"
-#import "../SBJson_Classes/SBJson.h"
+#import "FriendsCell.h"
+#import "User.h"
+#import "VenueCheckinsDataGetter.h"
+#import "SBJson.h"
 #import <Venmo/Venmo.h>
 
 @interface VenueViewController : UITableViewController <UserDelegate, VenueCheckinsDataGetterDelegate, UserDetailDelegate>

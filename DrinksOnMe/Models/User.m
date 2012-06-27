@@ -26,8 +26,8 @@
 
 - (id)init {
     if (self = [super init]) {
-        firstName = @"";
-        lastName = @"";
+        self.firstName = @"";
+        self.lastName = @"";
     }
     return self;
 }
@@ -39,7 +39,6 @@
  */
 - (void)getUserData:(id)tableViewController {
     self.navigationControllerDelegate = tableViewController;
-    userData = [[NSMutableData alloc] init];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [defaults objectForKey:@"access_token"];
@@ -53,8 +52,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                   delegate:self];
-    if(connection) {
-        userData = [NSMutableData data];
+    if (connection) {
+        self.userData = [NSMutableData data];
     } else {
         NSLog(@"connection failed");
     }
@@ -98,26 +97,25 @@
 - (void)didFinishUserDetailLoading:(NSString *)userFoursquareJson 
                      userVenmoJson:(NSString *)userVenmoJson {
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *foursquareJson = [jsonParser objectWithString:userFoursquareJson error:&error];
-    NSArray *venmoJson  = [jsonParser objectWithString:userVenmoJson error:&error];
-    
-    NSObject *fsqContact = [[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] 
-                            valueForKey:@"contact"];
-    NSObject *fsqCheckin = [[[[[foursquareJson valueForKey:@"response"] valueForKey:@"user"] 
-                              valueForKey:@"checkins"] valueForKey:@"items"] objectAtIndex:0];
-    
-    foursquareEmail = [fsqContact valueForKey:@"email"];
-    phone = [fsqContact valueForKey:@"phone"];
-    twitter = [fsqContact valueForKey:@"twitter"];
-    facebookID = [fsqContact valueForKey:@"facebook"];
+    NSArray *foursquareJson = [jsonParser objectWithString:userFoursquareJson error:NULL];
+    NSArray *venmoJson  = [jsonParser objectWithString:userVenmoJson error:NULL];
 
-    status = [fsqCheckin valueForKey:@"shout"];
-    venueName = [[fsqCheckin valueForKey:@"venue"] valueForKey:@"name"];
-    venueID = [[fsqCheckin valueForKey:@"venue"] valueForKey:@"id"];
+    NSDictionary *userDictionary = [foursquareJson valueForKeyPath:@"response.user"];
+    NSDictionary *fsqContactDictionary = [userDictionary objectForKey:@"contact"];
+    NSDictionary *fsqCheckinDictionary = [[userDictionary valueForKeyPath:@"checkins.items"] objectAtIndex:0];
+    
+    self.foursquareEmail = [fsqContactDictionary objectForKey:@"email"];
+    self.phone = [fsqContactDictionary objectForKey:@"phone"];
+    self.twitter = [fsqContactDictionary objectForKey:@"twitter"];
+    self.facebookID = [fsqContactDictionary objectForKey:@"facebook"];
+
+    self.status = [fsqCheckinDictionary objectForKey:@"shout"];
+    NSDictionary *fsqVenmue = [fsqCheckinDictionary objectForKey:@"venue"];
+    self.venueName = [fsqVenmue objectForKey:@"name"];
+    self.venueID = [fsqVenmue valueForKey:@"id"];
     
     NSArray *venmoContact = [venmoJson valueForKey:@"data"];
-    if(venmoContact.count > 0) {
+    if ([venmoContact count] > 0) {
         venmoName = [[venmoContact valueForKey:@"username"] objectAtIndex:0];
     }
 //    NSLog(@"Foursquare user's credentials: %@, %@, %@, %@, %@", 
@@ -145,16 +143,14 @@
  *  Those items of contact information were retrieved from the 4sq api.
  */
 - (void)didFinishVenmoUsernameLoading:(NSString *)jsonData {    
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *venmoJson = [jsonParser objectWithString:jsonData error:&error];
-    NSArray *venmoContact = [venmoJson valueForKey:@"data"];
+    NSArray *venmoContact = [[[[SBJsonParser alloc] init] objectWithString:jsonData error:NULL]
+                             objectForKey:@"data"];
 
     // if a venmo username was able to be retrieved, use it!
-    if(venmoContact.count > 0) {
-        venmoName = [[venmoContact objectAtIndex:0] valueForKey:@"username"];
+    if ([venmoContact count]) {
+        self.venmoName = [[venmoContact objectAtIndex:0] objectForKey:@"username"];
     }
-    
+
     [userDetailDelegate didFinishUserDetailLoading];
 }
 

@@ -38,6 +38,7 @@
 @protocol UserDelegate <NSObject>
 
 @required
+
 - (void)didFinishUserLoading:(NSString *)jsonData;
 
 @end
@@ -45,6 +46,7 @@
 @protocol UserDetailDelegate <NSObject>
 
 @required
+
 - (void)didFinishUserDetailLoading;
 
 @end

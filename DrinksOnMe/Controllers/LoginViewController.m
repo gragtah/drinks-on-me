@@ -14,13 +14,16 @@
 
 #pragma mark - UIViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"DrinksOnMe";
     }
     return self;
+}
+
+- (void)loadView {
+    [self setupLoadView];
 }
 
 - (void)setupLoadView {
@@ -29,15 +32,15 @@
     self.view = webView;
 }
 
-- (void)loadView {
-    [self setupLoadView];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupViewDidLoad];
 }
 
 /**
  * Go to the 4sq authentication site so the user can enter credentials.
  */
 - (void) setupViewDidLoad {
-    
     // Load the web view.
     NSString *authURLString = [NSString stringWithFormat:
                                @"https://foursquare.com/oauth2/authenticate?client_id=%@&response_type=token&redirect_uri=%@&display=touch", 
@@ -49,23 +52,13 @@
     [self.webView loadRequest:request];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self setupViewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *requestString = [[request URL] absoluteString];
     NSLog(@"<-- %@", requestString);
 
     //catch the access_token before webView has a chance to error out, then close webview 
-    if([requestString rangeOfString:@"access_token="].location != NSNotFound) {
+    if ([requestString rangeOfString:@"access_token="].location != NSNotFound) {
         
         //store the access token in NSUserDefaults
         NSString *accessToken = [[requestString componentsSeparatedByString:@"="] lastObject];

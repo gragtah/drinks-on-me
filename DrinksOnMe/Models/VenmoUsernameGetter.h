@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "../Supporting Files/HelperFunctions.h"
+#import "HelperFunctions.h"
 
 @protocol VenmoUsernameGetterDelegate;
 
@@ -19,6 +19,7 @@
 @protocol VenmoUsernameGetterDelegate <NSObject>
 
 @required
+
 - (void)didFinishVenmoUsernameLoading:(NSString *)jsonData;
 
 @end

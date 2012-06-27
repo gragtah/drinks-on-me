@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
-#import "../Supporting Files/HelperFunctions.h"
+#import "HelperFunctions.h"
 
 @protocol FriendDataGetterDelegate;
 
@@ -18,6 +18,7 @@
 @protocol FriendDataGetterDelegate <NSObject>
 
 @required
+
 - (void)didFinishFriendLoading:(NSString *)jsonData;
 
 @end

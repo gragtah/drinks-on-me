@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "../Supporting Files/HelperFunctions.h"
+#import "HelperFunctions.h"
 
 @protocol VenueCheckinsDataGetterDelegate;
 
@@ -16,6 +16,7 @@
 @protocol VenueCheckinsDataGetterDelegate <NSObject>
 
 @required
+
 - (void)didFinishVenueCheckinLoading:(NSString *)jsonData;
 
 @end

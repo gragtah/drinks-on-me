@@ -25,7 +25,6 @@
 - (void)getUserDetailData:(id)user foursquareId:(NSString *)theFoursquareId {
     self.delegate = user;
     self.foursquareId = theFoursquareId;
-    detailData = [[NSMutableData alloc] init];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [defaults objectForKey:@"access_token"];
@@ -39,8 +38,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                   delegate:self];
-    if(connection) {
-        detailData = [NSMutableData data];
+    if (connection) {
+        self.detailData = [NSMutableData data];
     } else {
         NSLog(@"connection failed");
     }
@@ -60,8 +59,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                   delegate:self];
-    if(connection) {
-        detailData = [NSMutableData data];
+    if (connection) {
+        self.detailData = [NSMutableData data];
     } else {
         NSLog(@"connection failed");
     }
@@ -85,7 +84,7 @@
     NSString *dataContent = [[NSString alloc] initWithData:detailData encoding:NSASCIIStringEncoding];
     
     // once the 4sq contact info and venmo username have been looked up, return to delegate
-    if(!gotFoursquareData) {
+    if (!gotFoursquareData) {
         [self getVenmoData];
         userFoursquareJson = dataContent;
         gotFoursquareData = true;

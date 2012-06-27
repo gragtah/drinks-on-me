@@ -22,15 +22,15 @@
 
     // Create a segmented control
     friendsVenue = [[UISegmentedControl alloc] initWithItems:
-                                        [NSArray arrayWithObjects:@"Friends", @"@Venue", nil]];
+                    [NSArray arrayWithObjects:@"Friends", @"@Venue", nil]];
     friendsVenue.frame = CGRectMake(0.0f, 0.0f, 160.0f, 27.0f);
     friendsVenue.segmentedControlStyle = UISegmentedControlStyleBar;
     [friendsVenue setWidth:0.0f forSegmentAtIndex:1];
-    [friendsVenue addTarget:self 
-                     action:@selector(viewChanged:) 
+    [friendsVenue addTarget:self
+                     action:@selector(viewChanged:)
            forControlEvents:UIControlEventValueChanged];
     friendsVenue.selectedSegmentIndex = 0;
-    
+
     // Create the logout button
     logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" 
                                                     style:UIBarButtonItemStyleDone 
@@ -42,9 +42,9 @@
  * Handler when the segmented control changes selection.
  */
 - (void) viewChanged:(UISegmentedControl *)sender {
-    if([sender selectedSegmentIndex] == 0) {
+    if ([sender selectedSegmentIndex] == 0) {
         //if it's the first time being shown, lazily load the table view controller
-        if(!friendsViewController) {
+        if (!friendsViewController) {
             NSLog(@"loading friends view controller");
             FriendsViewController *friendsVC = [[FriendsViewController alloc] init];
             self.friendsViewController = friendsVC;
@@ -61,10 +61,9 @@
         }
         //display it
         self.viewControllers = [NSArray arrayWithObject:friendsViewController];
-    } 
-    else {
+    } else {
         // load the rest of the venue table view controller
-        if(venueViewController) {
+        if (venueViewController) {
             NSLog(@"loading venue view controller");
             venueViewController.navigationItem.titleView = friendsVenue;
             venueViewController.navigationItem.leftBarButtonItem = logoutButton;
@@ -115,19 +114,17 @@
  * Search for the main user's 4sq information to set the title of the segmented control
  */
 - (void)didFinishUserLoading:(NSString *)jsonData {
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:jsonData error:&error];
-    NSArray *userJSON = [[jsonObjects valueForKey:@"response"] valueForKey:@"user"];
-    NSObject *venue = [[[[userJSON valueForKey:@"checkins"] valueForKey:@"items"] 
-                        objectAtIndex:0] valueForKey:@"venue"];
-    
-    mainUser.foursquareID = [userJSON valueForKey:@"id"];
-    mainUser.venueID = [venue valueForKey:@"id"];
-    mainUser.venueName = [venue valueForKey:@"name"];
-    
+    NSDictionary *userDictionary = [[[[SBJsonParser alloc] init] objectWithString:jsonData error:NULL]
+                                    valueForKeyPath:@"response.user"];
+    NSDictionary *venueDictionary = [[[userDictionary valueForKeyPath:@"checkins.items"]
+                                      objectAtIndex:0] objectForKey:@"venue"];
+
+    mainUser.foursquareID = [userDictionary objectForKey:@"id"];
+    mainUser.venueID = [venueDictionary objectForKey:@"id"];
+    mainUser.venueName = [venueDictionary objectForKey:@"name"];
+
     // set the title
-    NSString *titleText = ([mainUser.venueName length]>8 ? 
+    NSString *titleText = ([mainUser.venueName length] > 8 ?
                            [NSString stringWithFormat:@"%@...", [mainUser.venueName substringToIndex:8]] 
                            : mainUser.venueName);
     [friendsVenue setTitle:[NSString stringWithFormat:@"@%@", titleText] 

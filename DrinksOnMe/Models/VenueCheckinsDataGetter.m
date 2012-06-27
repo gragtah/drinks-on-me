@@ -10,8 +10,7 @@
  */
 - (void)getVenueData:( id)tableViewController venueId:(NSString *)venueId {
     self.delegate = tableViewController;
-    venueData = [[NSMutableData alloc] init];
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [defaults objectForKey:@"access_token"];
     NSString *urlString = [NSString stringWithFormat:
@@ -24,8 +23,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                   delegate:self];
-    if(connection) {
-        venueData = [NSMutableData data];
+    if (connection) {
+        self.venueData = [NSMutableData data];
     } else {
         NSLog(@"connection failed");
     }

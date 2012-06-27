@@ -16,8 +16,7 @@
                      twitter:(NSString *)twitter {
     
     self.delegate = tableViewController;
-    venmoData = [[NSMutableData alloc] init];
-    
+
     NSString *urlString = [NSString stringWithFormat:
                            @"https://venmo.com/api/v2/user_find?client_id=%@&client_secret=%@&facebook_ids=%@&emails=%@&phone_numbers=%@&twitter_screen_names=%@", 
                            venmoAppId, venmoAppSecret, 
@@ -32,8 +31,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest
                                                                   delegate:self];
-    if(connection) {
-        venmoData = [NSMutableData data];
+    if (connection) {
+        self.venmoData = [NSMutableData data];
     } else {
         NSLog(@"connection failed");
     }

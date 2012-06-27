@@ -1,5 +1,5 @@
 #import "VenueViewController.h"
-#import "../Views/FriendsCell.h"
+#import "FriendsCell.h"
 
 @implementation VenueViewController
 
@@ -9,45 +9,24 @@
 @synthesize venueCheckinsDataGetter;
 @synthesize checkedInUsers;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    return self;
-}
-
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [mainUser getUserData:self];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if (checkedInUsers.count > 0) {
-        return 1;
-    }
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return ([checkedInUsers count] ? 1 : 0);
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (checkedInUsers.count > 0) {
-        return checkedInUsers.count;
-    }
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [checkedInUsers count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //Same implementation from FriendsViewController, but with a different cell identifier
     static NSString *CellIdentifier = @"VenueCell";
     
@@ -63,7 +42,7 @@
     NSString *theUsername = [NSString stringWithFormat:@"%@ %@", 
                              userAtPath.firstName, 
                              userAtPath.lastName != NULL ? userAtPath.lastName : @""];
-    if(userAtPath.venmoName) {
+    if (userAtPath.venmoName) {
         theUsername = [NSString stringWithFormat:@"%@ [on Venmo]", theUsername];
     }
     
@@ -88,8 +67,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // same implementation from FriendsViewController
     User *friend = [checkedInUsers objectAtIndex:[indexPath row]];
     
@@ -119,16 +97,14 @@
  */
 - (void)didFinishUserLoading:(NSString *)jsonData {
     // the main thing is to get the id of the venue
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:jsonData error:&error];
-    NSArray *userJSON = [[jsonObjects valueForKey:@"response"] valueForKey:@"user"];
-    NSObject *venue = [[[[userJSON valueForKey:@"checkins"] valueForKey:@"items"] 
-                        objectAtIndex:0] valueForKey:@"venue"];
-    
-    mainUser.foursquareID = [userJSON valueForKey:@"id"];
-    mainUser.venueID = [venue valueForKey:@"id"];
-    mainUser.venueName = [venue valueForKey:@"name"];
+    NSDictionary *userJSON = [[[[SBJsonParser alloc] init] objectWithString:jsonData error:NULL]
+                              valueForKeyPath:@"response.user"];
+    NSDictionary *venue = [[[userJSON valueForKeyPath:@"checkins.items"]
+                            objectAtIndex:0] valueForKey:@"venue"];
+
+    mainUser.foursquareID = [userJSON objectForKey:@"id"];
+    mainUser.venueID = [venue objectForKey:@"id"];
+    mainUser.venueName = [venue objectForKey:@"name"];
     
     NSLog(@"foursquare user data retrieved %@", mainUser.venueID);
     
@@ -144,28 +120,26 @@
  */
 - (void)didFinishVenueCheckinLoading:(NSString *)jsonData {
     // the users that are checked in have been received
-    checkedInUsers = [[NSMutableArray alloc] init];
-    
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:jsonData error:&error];
-    NSArray *venueJSON = [[[jsonObjects valueForKey:@"response"] valueForKey:@"hereNow"] valueForKey:@"items"];
-    
-    NSEnumerator *e = [venueJSON objectEnumerator];
-    id checkedInObj;
-    while (checkedInObj = [e nextObject]) {
-        NSArray *checkedInArray = [checkedInObj valueForKey:@"user"];
+    NSArray *checkInDictionaries = [[[[SBJsonParser alloc] init] objectWithString:jsonData error:NULL]
+                                          valueForKeyPath:@"response.hereNow.items"];
+    checkedInUsers = [NSMutableArray arrayWithCapacity:[checkInDictionaries count]];
+    for (NSDictionary *checkInDictionary in checkInDictionaries) {
+        NSDictionary *checkedInUserDictionary = [checkInDictionary objectForKey:@"user"];
         User *checkedInUser = [[User alloc] init];
-        checkedInUser.foursquareID = [checkedInArray valueForKey:@"id"];
-        checkedInUser.firstName = [checkedInArray valueForKey:@"firstName"];
-        checkedInUser.lastName = [checkedInArray valueForKey:@"lastName"];
-        checkedInUser.photoURLString = [checkedInArray valueForKey:@"photo"];
-        
+        checkedInUser.foursquareID = [checkedInUserDictionary objectForKey:@"id"];
+        checkedInUser.firstName = [checkedInUserDictionary objectForKey:@"firstName"];
+        checkedInUser.lastName = [checkedInUserDictionary objectForKey:@"lastName"];
+        NSDictionary *photoDictionary = [checkedInUserDictionary objectForKey:@"photo"];
+        checkedInUser.photoURLString =  [[photoDictionary objectForKey:@"prefix"]
+                                         stringByAppendingString:
+                                         [photoDictionary objectForKey:@"suffix"]];
+
         // send yet another http request to check if the 4sq user has venmo and connected 4sq to it
         //  (if they're connected with venmo, you can buy them a drink them)
         [checkedInUser getUserDetailData:self];
         [checkedInUsers addObject:checkedInUser];
     }
+
     [self.tableView reloadData];
 }
 
