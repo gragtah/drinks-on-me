@@ -27,7 +27,7 @@
 @property (strong, nonatomic) NSString *venueName;
 @property (strong, nonatomic) NSString *venueID;
 
-@property (strong, nonatomic) NSString *photoURL;
+@property (strong, nonatomic) NSString *photoURLString;
 @property (strong, nonatomic) NSArray *friends;
 
 - (void)getUserData:(id)tableViewController;

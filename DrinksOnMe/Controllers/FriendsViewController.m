@@ -76,7 +76,7 @@
     
     // Set the contents of the cell
     cell.friendImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:
-                                                     [NSURL URLWithString:userAtPath.photoURL]]];
+                                                     [NSURL URLWithString:userAtPath.photoURLString]]];
     cell.usernameLabel.text = theUsername;
     cell.locationLabel.text = theLocation;
     cell.statusLabel.text = theStatus;
@@ -137,7 +137,7 @@
         foursquareFriend.foursquareID = [userObj valueForKey:@"id"];
         foursquareFriend.firstName = [userObj valueForKey:@"firstName"];
         foursquareFriend.lastName = [userObj valueForKey:@"lastName"];
-        foursquareFriend.photoURL = [userObj valueForKey:@"photo"];
+        foursquareFriend.photoURLString = [userObj valueForKey:@"photo"];
         
         // look up the 4sq friend's public information: like email, phone, twitter, fbook
         [foursquareFriend getUserDetailData:self];

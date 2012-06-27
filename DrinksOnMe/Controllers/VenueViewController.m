@@ -74,7 +74,7 @@
     
     // Set the contents of the cell
     cell.friendImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:
-                                                     [NSURL URLWithString:userAtPath.photoURL]]];
+                                                     [NSURL URLWithString:userAtPath.photoURLString]]];
     cell.usernameLabel.text = theUsername;
     cell.locationLabel.text = theLocation;
     cell.statusLabel.text = theStatus;
@@ -159,7 +159,7 @@
         checkedInUser.foursquareID = [checkedInArray valueForKey:@"id"];
         checkedInUser.firstName = [checkedInArray valueForKey:@"firstName"];
         checkedInUser.lastName = [checkedInArray valueForKey:@"lastName"];
-        checkedInUser.photoURL = [checkedInArray valueForKey:@"photo"];
+        checkedInUser.photoURLString = [checkedInArray valueForKey:@"photo"];
         
         // send yet another http request to check if the 4sq user has venmo and connected 4sq to it
         //  (if they're connected with venmo, you can buy them a drink them)

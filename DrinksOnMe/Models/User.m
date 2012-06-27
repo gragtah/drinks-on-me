@@ -21,13 +21,14 @@
 @synthesize venueName;
 @synthesize venueID;
 
-@synthesize photoURL;
+@synthesize photoURLString;
 @synthesize friends;
 
-- (User *)init {
-    self = [super init];
-    firstName = @"";
-    lastName = @"";
+- (id)init {
+    if (self = [super init]) {
+        firstName = @"";
+        lastName = @"";
+    }
     return self;
 }
 
