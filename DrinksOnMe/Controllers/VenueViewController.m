@@ -77,7 +77,7 @@
     // set the features on the transaction object
     venmoTransaction = [[VenmoTransaction alloc] init];
     venmoTransaction.amount = 5.0f;
-    venmoTransaction.note = @"for a drink on me!";
+    venmoTransaction.note = @"Have a drink on me!";
     venmoTransaction.toUserHandle = friend.venmoName;
     
     // this will show a venmo WEB VIEW payment scheme:
