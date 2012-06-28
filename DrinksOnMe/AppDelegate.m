@@ -20,7 +20,19 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                                              secret:venmoAppSecret
                                             localId:venmoLocalAppId];
     venmoClient.delegate = self;
-    
+
+//    // Test: Decode a signed_request into a VenmoTransaction object.
+//    NSURL *url = [NSURL URLWithString:@"venmo1001://paycharge?signed_request=wdkVY03FSu-JohWnwFGgR3z8P44_3ZdS3nte2jD6KOA.W3sicGF5bWVudF9pZCI6IDU2NTIxMCwgIm5vdGUiOiAiSGF2ZSBhIGRyaW5rIG9uIG1lISIsICJhbW91bnQiOiAiNS4wMCIsICJzdWNjZXNzIjogMX1d"];
+//    [venmoClient openURL:url completionHandler:^(VenmoTransaction *transaction, NSError *error) {
+//        NSLog(@"transaction.transactionID: %@", transaction.transactionID);
+//        NSLog(@"transaction.type: %i", transaction.type);
+//        NSLog(@"transaction.fromUserID: %@", transaction.fromUserID);
+//        NSLog(@"transaction.toUserID: %@", transaction.toUserID);
+//        NSLog(@"transaction.amount: %f", transaction.amount);
+//        NSLog(@"transaction.note: %@", transaction.note);
+//        NSLog(@"transaction.success: %c", transaction.success);
+//    }];
+
     // Create the view controller that enables logging in to foursquare
     LoginViewController *loginVC = [[LoginViewController alloc] init];
 
@@ -53,12 +65,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         if (transaction) {
             NSString *success = (transaction.success ? @"Success" : @"Failure");
             NSString *title = [@"Transaction " stringByAppendingString:success];
-            NSString *message = [@"payment_id: " stringByAppendingFormat:@"%i. %i %@ %@ (%i) $%@ %@",
-                                 transaction.id,
-                                 transaction.fromUserId,
+            NSString *message = [@"payment_id: " stringByAppendingFormat:@"%@. %@ %@ %@ (%@) $%@ %@",
+                                 transaction.transactionID,
+                                 transaction.fromUserID,
                                  transaction.typeStringPast,
                                  transaction.toUserHandle,
-                                 transaction.toUserId,
+                                 transaction.toUserID,
                                  transaction.amountString,
                                  transaction.note];    
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message
