@@ -87,7 +87,7 @@
     
     // set the features on the transaction object
     venmoTransaction = [[VenmoTransaction alloc] init];
-    venmoTransaction.amount = 5.0f;
+    venmoTransaction.amount = [NSDecimalNumber decimalNumberWithString:@"5.0"];
     venmoTransaction.note = @"Have a drink on me!";
     venmoTransaction.toUserHandle = friend.venmoName;
 
