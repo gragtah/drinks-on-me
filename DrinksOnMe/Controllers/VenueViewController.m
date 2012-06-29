@@ -130,8 +130,8 @@
         checkedInUser.firstName = [checkedInUserDictionary objectForKey:@"firstName"];
         checkedInUser.lastName = [checkedInUserDictionary objectForKey:@"lastName"];
         NSDictionary *photoDictionary = [checkedInUserDictionary objectForKey:@"photo"];
-        checkedInUser.photoURLString =  [[photoDictionary objectForKey:@"prefix"]
-                                         stringByAppendingString:
+        checkedInUser.photoURLString =  [NSString stringWithFormat:@"%@110x110%@", 
+                                         [photoDictionary objectForKey:@"prefix"], 
                                          [photoDictionary objectForKey:@"suffix"]];
 
         // send yet another http request to check if the 4sq user has venmo and connected 4sq to it

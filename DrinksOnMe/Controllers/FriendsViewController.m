@@ -118,8 +118,8 @@
         foursquareFriend.firstName = [friendDictionary objectForKey:@"firstName"];
         foursquareFriend.lastName = [friendDictionary objectForKey:@"lastName"];
         NSDictionary *photoDictionary = [friendDictionary objectForKey:@"photo"];
-        foursquareFriend.photoURLString =  [[photoDictionary objectForKey:@"prefix"]
-                                            stringByAppendingString:
+        foursquareFriend.photoURLString =  [NSString stringWithFormat:@"%@110x110%@", 
+                                            [photoDictionary objectForKey:@"prefix"], 
                                             [photoDictionary objectForKey:@"suffix"]];
 
         // look up the 4sq friend's public information: like email, phone, twitter, fbook
